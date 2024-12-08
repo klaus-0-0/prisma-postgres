@@ -16,6 +16,6 @@ app.get('/', (req, res) => {
 
 // Database connection and other configurations...
 
-app.listen(port, '0.0.0.0:8080', () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
