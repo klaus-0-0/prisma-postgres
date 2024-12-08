@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
+const port = process.env.PORT || 4000;
 
 // Middleware
 app.use(cors());
@@ -11,7 +14,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const port = process.env.PORT || 5000;
+// Database connection and other configurations...
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
