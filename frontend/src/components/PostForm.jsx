@@ -9,7 +9,7 @@ const PostForm = ({ fetchPosts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/posts', { topic, message });
+      await axios.post('https://deploy-5-pot3.onrender.com/api/posts', { topic, message });
       setTopic('');
       setMessage('');
       fetchPosts();
