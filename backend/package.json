@@ -1,4 +1,11 @@
 {
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node db/index.js",
+    "dev": "nodemon db/index.js",
+    "build": "yarn install && yarn run build"
+  },
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "bcryptjs": "^2.4.3",
