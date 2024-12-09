@@ -8,8 +8,8 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors({ 
-  origin: 'https://your-frontend-domain.com',
+app.use(cors({
+  origin: 'https://frontend-7ghn.onrender.com', // Update with your actual frontend domain
   credentials: true
 }));
 app.use(express.json());
