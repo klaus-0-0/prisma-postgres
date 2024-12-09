@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import config from '../config';
 
 const PostForm = ({ fetchPosts }) => {
   const [topic, setTopic] = useState('');
@@ -9,7 +10,7 @@ const PostForm = ({ fetchPosts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://deploy-5-pot3.onrender.com/api/posts', { topic, message });
+      await axios.post(`${config.apiUrl}/posts`, { topic, message });
       setTopic('');
       setMessage('');
       fetchPosts();

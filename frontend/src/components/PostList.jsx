@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import config from '../config';
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('https://deploy-5-pot3.onrender.com/api/posts');
+      const response = await axios.get(`${config.apiUrl}/posts`);
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts', error);

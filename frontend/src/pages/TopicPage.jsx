@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import config from '../config';
 import PostForm from '../components/PostForm';
 
 const TopicPage = ({ topic }) => {
@@ -8,7 +9,7 @@ const TopicPage = ({ topic }) => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('https://deploy-5-pot3.onrender.com/api/posts');
+      const response = await axios.get(`${config.apiUrl}/posts`);
       const filteredPosts = response.data.filter(post => post.topic && post.topic.toLowerCase() === topic.toLowerCase());
       setPosts(filteredPosts);
     } catch (error) {
