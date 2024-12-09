@@ -2,13 +2,13 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const postRoutes = require('./routes/posts');
+const postRoutes = require('./posts');
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors({
+app.use(cors({ 
   origin: 'https://your-frontend-domain.com',
   credentials: true
 }));
