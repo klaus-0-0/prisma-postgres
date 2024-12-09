@@ -12,6 +12,7 @@ router.post('/', async (req, res) => {
     });
     res.json(newPost);
   } catch (error) {
+    console.error('Error creating post:', error); // Log the error for debugging
     res.status(500).json({ error: 'Failed to create post' });
   }
 });
@@ -22,6 +23,7 @@ router.get('/', async (req, res) => {
     const allPosts = await prisma.post.findMany();
     res.json(allPosts);
   } catch (error) {
+    console.error('Error retrieving posts:', error); // Log the error for debugging
     res.status(500).json({ error: 'Failed to retrieve posts' });
   }
 });
