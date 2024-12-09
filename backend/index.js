@@ -14,6 +14,9 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Log database URL
+console.log(`Database URL: ${process.env.DATABASE_URL}`);
+
 // Routes
 app.use('/api/posts', postRoutes);
 

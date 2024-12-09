@@ -1,8 +1,9 @@
-/*
-  Warnings:
-
-  - Added the required column `topic` to the `Post` table without a default value. This is not possible if the table is not empty.
-
-*/
--- AlterTable
-ALTER TABLE "Post" ADD COLUMN     "topic" TEXT NOT NULL;
+CREATE TABLE "Post" (
+  "id" SERIAL PRIMARY KEY,
+  "title" TEXT NOT NULL,
+  "content" TEXT NOT NULL,
+  "topic" TEXT NOT NULL,
+  "published" BOOLEAN DEFAULT false,
+  "createdAt" TIMESTAMP DEFAULT NOW(),
+  "updatedAt" TIMESTAMP
+);
