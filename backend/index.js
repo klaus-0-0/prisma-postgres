@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Ensure this matches your frontend URL
+  origin: 'https://frontend-7ghn.onrender.com', // Allow requests from your deployed frontend domain
   credentials: true
 }));
 app.use(express.json());
