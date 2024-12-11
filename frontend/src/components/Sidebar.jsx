@@ -9,7 +9,7 @@ const Sidebar = ({ topics }) => {
       <ul>
         {topics.map((topic, index) => (
           <li key={index}>
-            <Link to={`/topics/${topic.toLowerCase()}`}>{topic}</Link>
+            <Link to={`/topics/${topic.toLowerCase()}`} key={index} className="topic-link" >{topic}</Link>
           </li>
         ))}
       </ul>

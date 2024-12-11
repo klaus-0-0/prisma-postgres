@@ -1,130 +1,199 @@
-/* src/index.css */
-body {
-  font-family: Arial, sans-serif;
-  background-color: rgb(255, 255, 255);
-  margin: 0;
-  padding: 0;
+/* Default light theme colors */
+:root {
+  --background-color: #ffffff; /* Background color for light theme */
+  --text-color: #000000; /* Text color for light theme */
+  --button-background-color: rgb(10, 170, 206); /* Button background color for light theme */
+  --button-text-color: #ffffff; /* Button text color for light theme */
+  --button-hover-background-color: #000000; /* Button hover background color for light theme */
 }
 
+/* Dark theme colors when body has class 'dark-mode' */
+body.dark-mode {
+  --background-color: #1a1a1a; /* Background color for dark theme */
+  --text-color: #ffffff; /* Text color for dark theme */
+  --button-background-color: #145170; /* Button background color for dark theme */
+  --button-text-color: #ffffff; /* Button text color for dark theme */
+  --button-hover-background-color: #7f1571; /* Button hover background color for dark theme */
+}
+
+/* General body styles */
+body {
+  font-family: Arial, sans-serif; /* Font family for the body */
+  background-color: var(--background-color); /* Use theme background color */
+  color: var(--text-color); /* Use theme text color */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+/* Navigation bar styles */
 nav {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
+  background-color: transparent; /* Fixed dark background for nav */
+  color: #fff; /* White text color */
+  padding: 1rem; /* Padding inside the nav */
 }
 
 nav ul {
-  list-style-type: none;
-  padding: 0;
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
 }
 
 nav ul li {
-  display: inline;
-  margin-right: 1rem;
+  display: inline; /* Display list items in a line */
+  margin-right: 1rem; /* Space between list items */
 }
 
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 200px; /* Increase the sidebar width if needed */
-  height: 100%;
-  background-color: #f4f4f4;
-  border-right: 1px solid #ddd;
-  padding: 4rem;
-  z-index: 1000; /* Ensure the sidebar is above other elements */
+/* Sidebar container styles */
+.sidebar-container {
+  position: fixed; /* Fix position to the viewport */
+  left: 0; /* Align to the left */
+  top: 0; /* Align to the top */
+  width: 200px; /* Fixed width */
+  height: 100%; /* Full height */
+  background-color: var(--background-color); /* Use theme background color */
+  border-right: 1px solid #ddd; /* Border on the right side */
+  padding: 20px; /* Padding inside the sidebar */
+  z-index: 1000; /* Ensure it is above other elements */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack elements vertically */
 }
 
 .sidebar ul {
-  list-style-type: none;
-  padding: 0;
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
 }
 
 .sidebar ul li {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /* Space between list items */
 }
 
+/* Main content area adjustments when sidebar is visible */
 .main-content {
-  margin-left: 0;
-  transition: margin-left 0.3s ease-in-out;
+  margin-left: 0; /* Default margin */
+  transition: margin-left 0.3s ease-in-out; /* Smooth transition for margin change */
 }
 
 .main-content.sidebar-visible {
-  margin-left: 350px; /* Increase the margin to shift content further right */
+  margin-left: 300px; /* Adjust margin to shift content right when sidebar is visible */
 }
 
+/* Toggle button styles */
 button.toggle-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  padding: 0.5rem 1rem;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1100; /* Ensure the button is above other elements */
+  position: fixed; /* Fix position to the viewport */
+  top: 10px; /* 10px from the top */
+  left: 10px; /* 10px from the left */
+  padding: 0.5rem 1rem; /* Padding inside the button */
+  background-color: #1fa8b2; /* Background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  z-index: 1100; /* Ensure it is above other elements */
+}
+
+/* Toggle button icon styles */
+.toggle-button img {
+  width: 24px; /* Width of the icon */
+  height: 24px; /* Height of the icon */
+}
+
+/* Theme switch button styles */
+/* Updated theme switch button styles */
+.theme-switch-button {
+  position: fixed; /* Fix position to the viewport */
+  top: 10px; /* Adjust top position if necessary */
+  right: 10px; /* 10px from the right */
+  padding: 0.5rem 1rem; /* Padding inside the button */
+  background-color: white; /* Transparent background to show SVGs clearly */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  z-index: 1100; /* Ensure it is above other elements */
+}
+
+.theme-switch-button img {
+  width: 24px; /* Width of the icon */
+  height: 24px; /* Height of the icon */
 }
 
 
 
-
-
-
-
-/* src/index.css or another stylesheet */
-
-/* Style for the input box for the title */
-input[type="text"] {
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
+/* Home button styles */
+.home-button {
+  margin: 50px 0 10px 0; /* Margin: 50px top, 0 right, 10px bottom, 0 left */
+  padding: 10px; /* Padding inside the button */
+  background-color: var(--button-background-color); /* Use theme button background color */
+  color: var(--button-text-color); /* Use theme button text color */
+  text-align: center; /* Center text alignment */
+  text-decoration: none; /* No text decoration */
+  border-radius: 5px; /* Rounded corners */
 }
 
-/* Style for the textarea for the thoughts */
+.home-button:hover {
+  background-color: var(--button-hover-background-color); /* Use theme button hover background color */
+}
+
+/* Styling for topic links in the sidebar */
+.topic-link {
+  display: block; /* Block layout */
+  padding: 10px; /* Padding inside the link */
+  margin: 5px 0; /* Margin: 5px top and bottom */
+  color: var(--text-color); /* Use theme text color */
+  font-size: 16px; /* Font size */
+  text-decoration: none; /* No text decoration */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for background color and text color */
+}
+
+.topic-link:hover {
+  background-color: var(--button-hover-background-color); /* Use theme button hover background color */
+  color: var(--button-text-color); /* Use theme button text color */
+}
+
+/* Styling for input boxes and textarea */
+input[type="text"],
 textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  height: 100px;
-  resize: vertical;
+  width: 100%; /* Full width */
+  padding: 0.5rem; /* Padding inside the input/textarea */
+  margin: 0.5rem 0; /* Margin: 0.5rem top and bottom */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
 }
 
-/* Style for the form button */
+textarea {
+  height: 100px; /* Height of the textarea */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+/* Styling for form buttons */
 button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease-in-out;
+  display: inline-block; /* Inline-block layout */
+  padding: 0.5rem 1rem; /* Padding inside the button */
+  margin-top: 0.5rem; /* Margin on the top */
+  background-color: #078aab; /* Background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1rem; /* Font size */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition for background color change */
 }
 
 button:hover {
-  background-color: #555;
+  background-color: #555; /* Background color on hover */
 }
 
-
-
-/* Add this CSS to your stylesheet */
+/* Container for post elements */
 .post-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack elements vertically */
+  gap: 1rem; /* Gap between elements */
 }
 
+/* Box styling for individual posts */
 .post-box {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+  border: 1px solid #ccc; /* Border color */
+  padding: 1rem; /* Padding inside the box */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9f9f9; /* Background color */
 }
