@@ -69,6 +69,22 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+
+
+
+app.get('/api/db-check', async (req, res) => {
+  try {
+    // Attempt to fetch the first user as a connection test
+    const user = await prisma.user.findFirst();
+    console.log('Database connection successful.');
+    res.status(200).json({ message: 'Database connection successful', user });
+  } catch (error) {
+    console.error('Database connection error:', error.message, error.stack); // Enhanced logging
+    res.status(500).json({ message: 'Database connection failed', error: error.message });
+  }
+});
+
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
