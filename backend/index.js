@@ -22,8 +22,6 @@ console.log(`Database URL: ${process.env.DATABASE_URL}`);
 // Routes
 app.use('/api/posts', postRoutes);
 
-
-
 // Register Route
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -80,4 +78,3 @@ app.post('/api/login', async (req, res) => {
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
- 
