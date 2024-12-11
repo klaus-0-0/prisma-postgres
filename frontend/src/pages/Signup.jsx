@@ -20,7 +20,8 @@ const Signup = () => {
       });
 
       if (response.ok) {
-        setMessage('User registered successfully!');
+        const data = await response.json();
+        setMessage(data.message);
       } else {
         const errorData = await response.json();
         setMessage(`Registration failed: ${errorData.message}`);

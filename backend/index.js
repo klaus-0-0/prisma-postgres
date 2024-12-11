@@ -30,7 +30,7 @@ app.post('/api/register', async (req, res) => {
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return res.status(400).send('User already exists');
+      return res.status(400).json({ message: 'User already exists' });
     }
 
     // Hash the password
@@ -45,10 +45,10 @@ app.post('/api/register', async (req, res) => {
       },
     });
 
-    res.status(201).send('User registered successfully');
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error registering user:', error); // Log the error for debugging
-    res.status(500).send('Server error');
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -59,18 +59,18 @@ app.post('/api/login', async (req, res) => {
   try {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return res.status(400).send('User not found');
+      return res.status(400).json({ message: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).send('Invalid password');
+      return res.status(400).json({ message: 'Invalid password' });
     }
 
-    res.status(200).send('Login successful');
+    res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error('Error during login:', error); // Log the error for debugging
-    res.status(500).send('Server error');
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
