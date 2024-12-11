@@ -4,25 +4,23 @@ datasource db {
 }
 
 generator client {
-  provider    = "prisma-client-js"
-  engineType  = "binary"  // or "library" depending on your setup
+  provider = "prisma-client-js"
 }
 
-// schema.prisma
 model User {
-  id       Int       @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   username String
-  email    String    @unique
+  email    String   @unique
   password String
-  posts    Post[]
 }
+
 
 model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
-  topic     String?
-  published Boolean  @default(false)
-  authorId  Int?
-  author    User?    @relation(fields: [authorId], references: [id])
+  topic     String
+  published Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
