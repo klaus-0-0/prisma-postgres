@@ -3,26 +3,22 @@ const cors = require('cors');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const { PrismaClient } = require('@prisma/client');
-const postRoutes = require('./posts'); // Import routes from posts.js
+const postRoutes = require('./posts');
 
 const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
 
-// Middleware
 app.use(cors({
   origin: 'https://frontend-7ghn.onrender.com', // Update with your actual frontend domain
   credentials: true
 }));
 app.use(express.json());
 
-// Log database URL
 console.log(`Database URL: ${process.env.DATABASE_URL}`);
 
-// Routes
 app.use('/api/posts', postRoutes);
 
-// Register Route
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -47,12 +43,11 @@ app.post('/api/register', async (req, res) => {
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error('Error registering user:', error); // Log the error for debugging
+    console.error('Error registering user:', error.message, error.stack); // Enhanced logging
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Login Route
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -69,12 +64,11 @@ app.post('/api/login', async (req, res) => {
 
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
-    console.error('Error during login:', error); // Log the error for debugging
+    console.error('Error during login:', error.message, error.stack); // Enhanced logging
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Start the server
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
