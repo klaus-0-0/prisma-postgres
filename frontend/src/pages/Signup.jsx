@@ -10,28 +10,23 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch('https://deploy-hmbw.onrender.com/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, email, password })
-      });
+import axios from 'axios';
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message);
-      } else {
-        const errorData = await response.json();
-        setMessage(`Registration failed: ${errorData.message}`);
-        console.error('Registration error:', errorData);
-      }
-    } catch (error) {
-      setMessage('Error connecting to server');
-      console.error('Error:', error);
-    }
-  };
+const registerUser = async () => {
+  try {
+    const response = await axios.post('https://deploy-hmbw.onrender.com/api/register', {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'testpassword'
+    });
+    console.log('Registration successful:', response.data);
+  } catch (error) {
+    console.error('Error registering user:', error.response ? error.response.data : error.message);
+  }
+};
+
+registerUser();
+
 
   return (
     <div style={styles.container}>
