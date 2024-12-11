@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { useState } from 'react';
-import config from '../config'; // Import config file
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -10,21 +10,23 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-const registerUser = async () => {
-  try {
-    const response = await axios.post('https://deploy-hmbw.onrender.com/api/register', {
-      username: 'testuser',
-      email: 'testuser@example.com',
-      password: 'testpassword'
-    });
-    console.log('Registration successful:', response.data);
-  } catch (error) {
-    console.error('Error registering user:', error.response ? error.response.data : error.message);
-  }
-};
 
-registerUser();
-
+    const registerUser = async () => {
+      try {
+        const response = await axios.post('https://deploy-hmbw.onrender.com/api/register', {
+          username: 'testuser',
+          email: 'testuser@example.com',
+          password: 'testpassword'
+        });
+        console.log('Registration successful:', response.data);
+      } catch (error) {
+        console.error('Error registering user:', error.response ? error.response.data : error.message);
+      }
+    };
+    
+    registerUser();
+    
+  };
 
   return (
     <div style={styles.container}>
