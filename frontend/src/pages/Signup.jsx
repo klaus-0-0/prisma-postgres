@@ -1,4 +1,3 @@
-// src/pages/Signup.jsx
 import { useState } from 'react';
 import config from '../config'; // Import config file
 
@@ -23,7 +22,9 @@ const Signup = () => {
       if (response.ok) {
         setMessage('User registered successfully!');
       } else {
-        setMessage('Registration failed');
+        const errorData = await response.json();
+        setMessage(`Registration failed: ${errorData.message}`);
+        console.error('Registration error:', errorData);
       }
     } catch (error) {
       setMessage('Error connecting to server');
