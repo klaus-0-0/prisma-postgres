@@ -1,5 +1,5 @@
+import config from '../config'
 import { useState } from 'react';
-import config from '../config'; // Import config file
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -11,8 +11,6 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      console.log('Sending registration request:', { username, email, password });
-
       const response = await fetch(`${config.apiUrl}/register`, {
         method: 'POST',
         headers: {
@@ -21,12 +19,9 @@ const Signup = () => {
         body: JSON.stringify({ username, email, password })
       });
 
-      console.log('Received response:', response);
-
       if (response.ok) {
         const data = await response.json();
         setMessage(data.message);
-        console.log('Registration successful:', data);
       } else {
         const errorData = await response.json();
         setMessage(`Registration failed: ${errorData.message}`);
@@ -34,7 +29,7 @@ const Signup = () => {
       }
     } catch (error) {
       setMessage('Error connecting to server');
-      console.error('Fetch error:', error);
+      console.error('Error:', error);
     }
   };
 
