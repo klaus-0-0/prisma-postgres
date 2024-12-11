@@ -10,8 +10,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-import axios from 'axios';
-
 const registerUser = async () => {
   try {
     const response = await axios.post('https://deploy-hmbw.onrender.com/api/register', {
