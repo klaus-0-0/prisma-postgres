@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 // Create a new post
-router.post('/posts', async (req, res) => { // Updated route to /posts for clarity
+router.post('/posts', async (req, res) => {
   const { topic, message } = req.body;
   try {
     const newPost = await prisma.post.create({
@@ -19,7 +19,7 @@ router.post('/posts', async (req, res) => { // Updated route to /posts for clari
 });
 
 // Retrieve all posts
-router.get('/posts', async (req, res) => { // Updated route to /posts for clarity
+router.get('/posts', async (req, res) => {
   try {
     const allPosts = await prisma.post.findMany();
     res.json(allPosts);
@@ -80,6 +80,18 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error('Error during login:', error.message, error.stack); // Enhanced logging
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Database Check Route
+router.get('/db-check', async (req, res) => {
+  try {
+    const user = await prisma.user.findFirst();
+    console.log('Database connection successful.');
+    res.status(200).json({ message: 'Database connection successful', user });
+  } catch (error) {
+    console.error('Database connection error:', error.message, error.stack);
+    res.status(500).json({ message: 'Database connection failed', error: error.message });
   }
 });
 
