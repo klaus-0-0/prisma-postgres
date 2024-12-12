@@ -82,7 +82,9 @@ app.post('/api/posts', async (req, res) => {
 
   try {
     console.log('Inserting post:', { title, content, topic });
-    const queryString = `INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) VALUES ('${title}', '${content}', '${topic}', false, '${new Date().toISOString()}', '${new Date().toISOString()}') RETURNING *`;
+    const queryString = `INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) 
+                         VALUES ('${title}', '${content}', '${topic}', false, '${new Date().toISOString()}', '${new Date().toISOString()}') 
+                         RETURNING *`;
     const result = await client.query(queryString);
     console.log('Post insert result:', result);
     const newPost = result.rows[0];
@@ -96,6 +98,7 @@ app.post('/api/posts', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 // Get Posts Route
 app.get('/api/posts', async (req, res) => {
