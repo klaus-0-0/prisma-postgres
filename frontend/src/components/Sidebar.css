@@ -32,7 +32,7 @@
     background-color: var(--button-hover-background-color);
   }
   
-  .sidebar nav ul {
+  /* .sidebar nav ul {
     list-style-type: none;
     padding: 0;
   }
@@ -58,4 +58,4 @@
   .sidebar nav ul li button:hover {
     background-color: var(--button-hover-background-color);
   }
-  
+   */
