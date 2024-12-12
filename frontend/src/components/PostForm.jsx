@@ -10,8 +10,6 @@ const PostForm = ({ fetchPosts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Submitting post:', { title, content, topic });
-
     try {
       const response = await axios.post(`${config.apiUrl}/posts`, {
         title,
@@ -28,7 +26,7 @@ const PostForm = ({ fetchPosts }) => {
         console.error('Error posting message:', response.data.message);
       }
     } catch (error) {
-      console.error('Error posting message:', error);
+      console.error('Error posting message:', error.response?.data?.message || error.message);
     }
   };
 
