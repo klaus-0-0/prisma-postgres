@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Home from '../pages/Home';
@@ -9,7 +9,7 @@ import buttonSvg from '../assets/button.svg';
 import daySvg from '../assets/day.svg';
 import nightSvg from '../assets/night.svg';
 
-const Dashboard = ({ topics, isAuthenticated }) => { // Accept isAuthenticated as a prop
+const Dashboard = ({ topics, isAuthenticated }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -25,8 +25,6 @@ const Dashboard = ({ topics, isAuthenticated }) => { // Accept isAuthenticated a
       document.body.classList.remove('dark-mode');
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <div>

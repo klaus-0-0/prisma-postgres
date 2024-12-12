@@ -107,6 +107,20 @@ app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
+app.get('/api/posts', (req, res) => {
+  const topic = req.query.topic;
+  // Fetch posts from database with topic filter
+  const posts = [
+    { id: 1, title: 'Tech Post 1', content: 'Content of tech post 1', topic: 'technology' },
+    { id: 2, title: 'Sports Post 1', content: 'Content of sports post 1', topic: 'sports' },
+    { id: 3, title: 'Culture Post 1', content: 'Content of culture post 1', topic: 'culture' },
+    { id: 4, title: 'Entertainment Post 1', content: 'Content of entertainment post 1', topic: 'entertainment' }
+  ];
+  const filteredPosts = topic ? posts.filter(post => post.topic === topic) : posts;
+  res.json(filteredPosts);
+});
+
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
