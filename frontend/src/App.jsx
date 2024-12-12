@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard topics={topics} isAuthenticated={isAuthenticated} /> : <Navigate to="/login" />} />
+        <Route path="/dashboard/*" element={isAuthenticated ? <Dashboard topics={topics} isAuthenticated={isAuthenticated} /> : <Navigate to="/login" />} /> {/* Add trailing * */}
       </Routes>
     </Router>
   );
