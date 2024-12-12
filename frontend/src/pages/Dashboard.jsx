@@ -26,6 +26,8 @@ const Dashboard = ({ topics, isAuthenticated }) => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <div>
       <Navbar />
