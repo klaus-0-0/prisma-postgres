@@ -11,6 +11,7 @@ import './index.css';
 import buttonSvg from './assets/button.svg';
 import daySvg from './assets/day.svg';
 import nightSvg from './assets/night.svg';
+import LandingPage from './pages/LandingPage'
 
 const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -52,7 +53,7 @@ const App = () => {
       )}
       <div className={`main-content ${showSidebar ? 'sidebar-visible' : ''}`}>
         <Routes>
-          <Route path="/" element={<Navigate to="/signup" />} />
+          <Route path="/" element={<Navigate to="/LandingPage" />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />

@@ -74,18 +74,35 @@ app.post('/api/login', async (req, res) => {
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
-  const { userId, title, content, topic } = req.body;
-  console.log('Received post creation request:', req.body);
+  const { title, content, topic } = req.body;
+
+  if (!title || !content || !topic) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
   try {
-    await client.query(
-      'INSERT INTO "Post" (title, content, topic, authorId, published, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, NOW(), NOW())',
-      [title, content, topic, userId, true]
+    const result = await client.query(
+      'INSERT INTO "Posts" (title, content, topic, created_at) VALUES ($1, $2, $3, $4) RETURNING *',
+      [title, content, topic, new Date()]
     );
-    res.status(201).json({ message: 'Post created successfully' });
+    const newPost = result.rows[0];
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
   } catch (error) {
     console.error('Error creating post:', error.message, error.stack);
-    res.status(500).json({ error: 'Failed to create post' });
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get Posts Route
+app.get('/api/posts', async (req, res) => {
+  const topic = req.query.topic;
+
+  try {
+    const result = await client.query('SELECT * FROM "Posts" WHERE topic = $1', [topic]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching posts:', error.message, error.stack);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -106,20 +123,6 @@ app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.sendStatus(204);
 });
-
-app.get('/api/posts', (req, res) => {
-  const topic = req.query.topic;
-  // Fetch posts from database with topic filter
-  const posts = [
-    { id: 1, title: 'Tech Post 1', content: 'Content of tech post 1', topic: 'technology' },
-    { id: 2, title: 'Sports Post 1', content: 'Content of sports post 1', topic: 'sports' },
-    { id: 3, title: 'Culture Post 1', content: 'Content of culture post 1', topic: 'culture' },
-    { id: 4, title: 'Entertainment Post 1', content: 'Content of entertainment post 1', topic: 'entertainment' }
-  ];
-  const filteredPosts = topic ? posts.filter(post => post.topic === topic) : posts;
-  res.json(filteredPosts);
-});
-
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);

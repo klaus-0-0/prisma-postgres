@@ -1,21 +1,30 @@
 import { useState } from 'react';
 import axios from 'axios';
+import config from '../config';
 
-const PostForm = ({ userId }) => {
+const PostForm = ({ fetchPosts }) => {
   const [title, setTitle] = useState('');
-  const [topic, setTopic] = useState('');
   const [content, setContent] = useState('');
+  const [topic, setTopic] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('https://deploy-hmbw.onrender.com/api/posts', {
-        userId, // Ensure userId is passed
-        title,  // Ensure title is included
+      const response = await axios.post(`${config.apiUrl}/posts`, {
+        title,
+        content,
         topic,
-        content // Ensure content is included
       });
-      console.log('Post created:', response.data);
+
+      if (response.status === 201) {
+        fetchPosts(); // Refresh posts after successful post creation
+        setTitle('');
+        setContent('');
+        setTopic('');
+      } else {
+        console.error('Error posting message:', response.data.message);
+      }
     } catch (error) {
       console.error('Error posting message:', error);
     }
@@ -23,27 +32,33 @@ const PostForm = ({ userId }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        required
-      />
-      <input
-        type="text"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        placeholder="Topic"
-        required
-      />
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Content"
-        required
-      />
-      <button type="submit">Submit</button>
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Content:</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Topic:</label>
+        <input
+          type="text"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+          required
+        />
+      </div>
+      <button type="submit">Post</button>
     </form>
   );
 };
