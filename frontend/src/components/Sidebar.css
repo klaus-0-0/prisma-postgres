@@ -1,0 +1,61 @@
+/* src/components/Sidebar.css */
+
+.sidebar {
+    width: 200px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .home-button,
+  .home-dashboard {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .home-button:hover,
+  .home-dashboard:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar nav ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar nav ul li button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar nav ul li button:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  
