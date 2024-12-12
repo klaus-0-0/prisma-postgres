@@ -1,18 +1,28 @@
 // src/components/Sidebar.jsx
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import './Sidebar.css';
 
 const Sidebar = ({ topics }) => {
+  const navigate = useNavigate();
+
+  const handleHomeClick = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div className="sidebar">
-      <h2>Topics</h2>
-      <ul>
-        {topics.map((topic, index) => (
-          <li key={index}>
-            <Link to={`/topics/${topic.toLowerCase()}`} key={index} className="topic-link" >{topic}</Link>
-          </li>
-        ))}
-      </ul>
+      <button className="home-button" onClick={() => navigate('/login')}>Log out</button>
+      <button className="home-dashboard" onClick={handleHomeClick}>Home</button> {/* Home button */}
+      <nav>
+        <ul>
+          {topics.map((topic, index) => (
+            <li key={index}>
+              <button onClick={() => navigate(`/topics/${topic.toLowerCase()}`)}>{topic}</button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };

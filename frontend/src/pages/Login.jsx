@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import config from '../config';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -21,11 +22,12 @@ const Login = ({ onLogin }) => {
       });
 
       if (response.ok) {
+        const data = await response.json();
         setMessage('Login successful!');
-        onLogin(); // Update authentication state
         navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
-        setMessage('Login failed');
+        const errorData = await response.json();
+        setMessage(`Login failed: ${errorData.message}`);
       }
     } catch (error) {
       setMessage('Error connecting to server');
@@ -91,7 +93,7 @@ const styles = {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '5px',
-    backgroundColor: '##00BFFF',
+    backgroundColor: '#00BFFF',
     color: 'white',
     cursor: 'pointer'
   }

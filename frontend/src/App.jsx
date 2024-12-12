@@ -6,7 +6,7 @@ import Sidebar from './components/Sidebar';
 import TopicPage from './pages/TopicPage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';  // Import Dashboard component
+import Dashboard from './pages/Dashboard';
 import './index.css';
 import buttonSvg from './assets/button.svg';
 import daySvg from './assets/day.svg';
@@ -31,7 +31,6 @@ const App = () => {
     }
   };
 
-  // Handler to simulate user authentication (to be replaced with actual logic)
   const handleLogin = () => setIsAuthenticated(true);
 
   const topics = ['Technology', 'Sports', 'Culture', 'Entertainment'];
@@ -47,8 +46,6 @@ const App = () => {
       </button>
       {showSidebar && (
         <div className="sidebar-container">
-          <a href="/" className="home-button">Log out</a>
-          <a href="https://frontend-7ghn.onrender.com/dashboard" className="home-button">Home</a>  {/* Home button */}
           <Sidebar topics={topics} />
         </div>
       )}
@@ -57,7 +54,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/dashboard/*" element={isAuthenticated ? <Dashboard topics={topics} /> : <Navigate to="/login" />} />
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard topics={topics} /> : <Navigate to="/login" />} />
           <Route path="/home" element={<Home />} />
           {topics.map((topic, index) => (
             <Route
