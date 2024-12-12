@@ -6,19 +6,17 @@ const PostForm = ({ fetchPosts }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [topic, setTopic] = useState('');
-  const [authorId, setAuthorId] = useState(1); // Replace with actual logic to get authorId
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Submitting post:', { title, content, topic, authorId });
+    console.log('Submitting post:', { title, content, topic });
 
     try {
       const response = await axios.post(`${config.apiUrl}/posts`, {
         title,
         content,
-        topic,
-        authorId
+        topic
       });
 
       if (response.status === 201) {
@@ -59,15 +57,6 @@ const PostForm = ({ fetchPosts }) => {
           type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Author ID:</label>
-        <input
-          type="number"
-          value={authorId}
-          onChange={(e) => setAuthorId(e.target.value)}
           required
         />
       </div>

@@ -76,18 +76,20 @@ app.post('/api/login', async (req, res) => {
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
-  const { title, content, topic, authorId } = req.body;
+  const { title, content, topic } = req.body;
 
-  if (!title || !content || !topic || !authorId) {
-    console.error('Missing required fields:', { title, content, topic, authorId });
+  if (!title || !content || !topic) {
+    console.error('Missing required fields:', { title, content, topic });
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
+    console.log('Inserting post:', { title, content, topic });
     const result = await client.query(
-      'INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt, authorId) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [title, content, topic, false, new Date(), new Date(), authorId]
+      'INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [title, content, topic, false, new Date(), new Date()]
     );
+    console.log('Post insert result:', result);
     const newPost = result.rows[0];
     res.status(201).json({ message: 'Post created successfully', post: newPost });
   } catch (error) {
