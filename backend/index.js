@@ -17,7 +17,9 @@ app.use(express.json());
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 client.connect().catch(err => {
@@ -77,6 +79,7 @@ app.post('/api/posts', async (req, res) => {
   const { title, content, topic, authorId } = req.body;
 
   if (!title || !content || !topic || !authorId) {
+    console.error('Missing required fields:', { title, content, topic, authorId });
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -93,13 +96,12 @@ app.post('/api/posts', async (req, res) => {
   }
 });
 
-
 // Get Posts Route
 app.get('/api/posts', async (req, res) => {
   const topic = req.query.topic;
 
   try {
-    const result = await client.query('SELECT * FROM "Posts" WHERE topic = $1', [topic]);
+    const result = await client.query('SELECT * FROM "Post" WHERE topic = $1', [topic]);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching posts:', error.message, error.stack);

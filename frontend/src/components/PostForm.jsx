@@ -11,6 +11,8 @@ const PostForm = ({ fetchPosts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('Submitting post:', { title, content, topic, authorId });
+
     try {
       const response = await axios.post(`${config.apiUrl}/posts`, {
         title,
