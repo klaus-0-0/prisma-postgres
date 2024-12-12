@@ -42,6 +42,7 @@ const createPostTableQuery = `
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    topic VARCHAR(255) NOT NULL,
     authorId INT REFERENCES "User"(id)
   );
 `;
@@ -104,19 +105,18 @@ app.post('/api/login', async (req, res) => {
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
-  const { title, content, authorId } = req.body;
+  const { title, content, topic, authorId } = req.body;
 
-  if (!title || !content || !authorId) {
-    console.error('Missing required fields:', { title, content, authorId });
-    return res.status(400).json({ message: 'Title, content, and authorId are required' });
+  if (!title || !content || !topic || !authorId) {
+    console.error('Missing required fields:', { title, content, topic, authorId });
+    return res.status(400).json({ message: 'Title, content, topic, and authorId are required' });
   }
 
   try {
-    console.log('Inserting post:', { title, content, authorId });
-    const queryString = `INSERT INTO "Post" (title, content, authorId) VALUES ('${title}', '${content}', ${authorId}) RETURNING *`;
-    const result = await client.query(queryString);
-    const newPost = result.rows[0];
-    res.status(201).json({ message: 'Post created successfully', post: newPost });
+    console.log('Inserting post:', { title, content, topic, authorId });
+    const queryString = `INSERT INTO "Post" (title, content, topic, authorId) VALUES ('${title}', '${content}', '${topic}', ${authorId})`;
+    await client.query(queryString);
+    res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {
     console.error('Error creating post:', error.message, error.stack);
     res.status(500).json({ message: 'Server error', error: error.message });
