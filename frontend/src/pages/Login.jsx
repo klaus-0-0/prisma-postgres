@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import config from '../config';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Login = () => { // Ensure onLogin is destructured from props
+const Login = ({ onLogin }) => { // Ensure onLogin is destructured from props
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +21,9 @@ const Login = () => { // Ensure onLogin is destructured from props
       });
 
       if (response.ok) {
+        const data = await response.json();
         setMessage('Login successful!');
+        onLogin(); // Update authentication state
         navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
         setMessage('Login failed');
@@ -90,7 +92,7 @@ const styles = {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '5px',
-    backgroundColor: '##00BFFF',
+    backgroundColor: '#007bff',
     color: 'white',
     cursor: 'pointer'
   }
