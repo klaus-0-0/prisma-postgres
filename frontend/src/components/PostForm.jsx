@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
-import config from '../config';
 
-const PostForm = ({ fetchPosts }) => {
+const PostForm = ({ userId }) => {
   const [topic, setTopic] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${config.apiUrl}/posts`, { topic, message });
-      setTopic('');
-      setMessage('');
-      fetchPosts();
+      const response = await axios.post('https://deploy-hmbw.onrender.com/api/posts', {
+        userId, // Pass the user ID
+        topic,
+        message
+      });
+      console.log('Post created:', response.data);
     } catch (error) {
       console.error('Error posting message', error);
     }
@@ -23,24 +23,20 @@ const PostForm = ({ fetchPosts }) => {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Topic"
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
+        placeholder="Topic"
         required
       />
       <textarea
-        placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        placeholder="Message"
         required
       />
-      <button type="submit">Post</button>
+      <button type="submit">Submit</button>
     </form>
   );
-};
-
-PostForm.propTypes = {
-  fetchPosts: PropTypes.func.isRequired,
 };
 
 export default PostForm;
