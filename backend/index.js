@@ -26,6 +26,39 @@ client.connect().catch(err => {
   console.error('Connection error:', err.stack);
 });
 
+// Create "User" table if it doesn't exist
+const createUserTableQuery = `
+  CREATE TABLE IF NOT EXISTS "User" (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+  );
+`;
+
+// Create "Post" table if it doesn't exist
+const createPostTableQuery = `
+  CREATE TABLE IF NOT EXISTS "Post" (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    authorId INT REFERENCES "User"(id)
+  );
+`;
+
+// Execute table creation queries
+client.query(createUserTableQuery).then(() => {
+  console.log('Table "User" created or already exists.');
+}).catch(err => {
+  console.error('Error creating User table:', err.message, err.stack);
+});
+
+client.query(createPostTableQuery).then(() => {
+  console.log('Table "Post" created or already exists.');
+}).catch(err => {
+  console.error('Error creating Post table:', err.message, err.stack);
+});
+
 // Register Route
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -71,16 +104,16 @@ app.post('/api/login', async (req, res) => {
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, authorId } = req.body;
 
-  if (!title || !content) {
-    console.error('Missing required fields:', { title, content });
-    return res.status(400).json({ message: 'Both title and content are required' });
+  if (!title || !content || !authorId) {
+    console.error('Missing required fields:', { title, content, authorId });
+    return res.status(400).json({ message: 'Title, content, and authorId are required' });
   }
 
   try {
-    console.log('Inserting post:', { title, content });
-    const queryString = `INSERT INTO "Post" (title, content) VALUES ('${title}', '${content}') RETURNING *`;
+    console.log('Inserting post:', { title, content, authorId });
+    const queryString = `INSERT INTO "Post" (title, content, authorId) VALUES ('${title}', '${content}', ${authorId}) RETURNING *`;
     const result = await client.query(queryString);
     const newPost = result.rows[0];
     res.status(201).json({ message: 'Post created successfully', post: newPost });
@@ -90,13 +123,10 @@ app.post('/api/posts', async (req, res) => {
   }
 });
 
-
 // Retrieve All Posts Route
 app.get('/api/posts', async (req, res) => {
-  const topic = req.query.topic;
-
   try {
-    const result = await client.query(`SELECT * FROM "Post" WHERE topic = '${topic}'`);
+    const result = await client.query(`SELECT * FROM "Post"`);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching posts:', error.message, error.stack);
