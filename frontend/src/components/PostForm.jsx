@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import config from '../config';
 
 const PostForm = () => {
@@ -11,26 +10,33 @@ const PostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const postData = {
-      title,
-      content,
-      topic,
-      authorId: 1 // Ensure this is set correctly
-    };
-
     try {
-      const response = await axios.post(`${config.apiUrl}/posts`, postData);
+      const response = await fetch(`${config.apiUrl}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          topic,
+          authorId: 1 // Ensure this is set correctly
+        })
+      });
 
-      if (response.status === 201) {
+      if (response.ok) {
         setMessage('Post created successfully');
         setTitle('');
         setContent('');
         setTopic('');
       } else {
-        setMessage(`Error posting message: ${response.data.message}`);
+        const errorData = await response.json();
+        setMessage(`Error posting message: ${errorData.message}`);
+        console.error('Error posting message:', errorData);
       }
     } catch (error) {
-      setMessage(`Error posting message: ${error.response?.data?.message || error.message}`);
+      setMessage('Error connecting to server');
+      console.error('Error:', error);
     }
   };
 
