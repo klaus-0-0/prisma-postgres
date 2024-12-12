@@ -9,10 +9,9 @@ import buttonSvg from '../assets/button.svg';
 import daySvg from '../assets/day.svg';
 import nightSvg from '../assets/night.svg';
 
-const Dashboard = ({ topics }) => {
+const Dashboard = ({ topics, isAuthenticated }) => { // Accept isAuthenticated as a prop
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -26,9 +25,6 @@ const Dashboard = ({ topics }) => {
       document.body.classList.remove('dark-mode');
     }
   };
-
-  // Handler to simulate user authentication (to be replaced with actual logic)
-  const handleLogin = () => setIsAuthenticated(true);
 
   const navigate = useNavigate();
 
