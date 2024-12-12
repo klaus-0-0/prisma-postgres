@@ -1,5 +1,6 @@
 import config from '../config';
 import { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -22,6 +23,7 @@ const Signup = () => {
       if (response.ok) {
         const data = await response.json();
         setMessage(data.message);
+        Navigate('/Login')
       } else {
         const errorData = await response.json();
         setMessage(`Registration failed: ${errorData.message}`);

@@ -1,6 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from 'react';
 import config from '../config'; // Import config file
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,7 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
+        navigate('/dashboard')
       } else {
         setMessage('Login failed');
       }
