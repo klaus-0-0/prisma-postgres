@@ -9,9 +9,10 @@ import buttonSvg from '../assets/button.svg';
 import daySvg from '../assets/day.svg';
 import nightSvg from '../assets/night.svg';
 
-const Dashboard = ({ topics, isAuthenticated }) => {
+const Dashboard = ({ topics }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -25,6 +26,11 @@ const Dashboard = ({ topics, isAuthenticated }) => {
       document.body.classList.remove('dark-mode');
     }
   };
+
+  // Handler to simulate user authentication (to be replaced with actual logic)
+  const handleLogin = () => setIsAuthenticated(true);
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -44,7 +50,7 @@ const Dashboard = ({ topics, isAuthenticated }) => {
       <div className={`main-content ${showSidebar ? 'sidebar-visible' : ''}`}>
         <Routes>
           <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
-          {topics && topics.map((topic, index) => (
+          {topics.map((topic, index) => (
             <Route
               key={index}
               path={`/topics/${topic.toLowerCase()}`}
