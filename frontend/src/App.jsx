@@ -11,7 +11,6 @@ const App = () => {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    console.log("User is authenticated");
   };
 
   return (
@@ -20,7 +19,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/dashboard/*" element={isAuthenticated ? <Dashboard topics={topics} isAuthenticated={isAuthenticated} /> : <Navigate to="/login" />} /> {/* Add trailing * */}
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard topics={topics} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

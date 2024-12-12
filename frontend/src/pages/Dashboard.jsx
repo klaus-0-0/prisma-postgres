@@ -9,7 +9,7 @@ import buttonSvg from '../assets/button.svg';
 import daySvg from '../assets/day.svg';
 import nightSvg from '../assets/night.svg';
 
-const Dashboard = ({ topics, isAuthenticated }) => {
+const Dashboard = ({ topics }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -43,7 +43,7 @@ const Dashboard = ({ topics, isAuthenticated }) => {
       )}
       <div className={`main-content ${showSidebar ? 'sidebar-visible' : ''}`}>
         <Routes>
-          <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+          <Route path="/" element={<Home />} />
           {topics.map((topic, index) => (
             <Route
               key={index}
