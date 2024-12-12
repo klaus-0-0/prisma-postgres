@@ -11,7 +11,7 @@ import './index.css';
 import buttonSvg from './assets/button.svg';
 import daySvg from './assets/day.svg';
 import nightSvg from './assets/night.svg';
-import LandingPage from './pages/LandingPage'
+import LandingPage from './pages/LandingPage';
 
 const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -56,7 +56,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/LandingPage" />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/dashboard/*" element={isAuthenticated ? <Dashboard topics={topics} /> : <Navigate to="/login" />} />
           <Route path="/home" element={<Home />} />
           {topics.map((topic, index) => (
             <Route
