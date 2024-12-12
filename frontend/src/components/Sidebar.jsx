@@ -1,7 +1,7 @@
 // src/components/Sidebar.jsx
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import './Sidebar.css';
+// import './Sidebar.css';
 
 const Sidebar = ({ topics }) => {
   const navigate = useNavigate();
