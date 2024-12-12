@@ -74,7 +74,6 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Create Post Route
 app.post('/api/posts', async (req, res) => {
   const { title, content, topic } = req.body;
 
@@ -85,18 +84,21 @@ app.post('/api/posts', async (req, res) => {
 
   try {
     console.log('Inserting post:', { title, content, topic });
-    const result = await client.query(
-      'INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [title, content, topic, false, new Date(), new Date()]
-    );
+    const queryString = `INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) VALUES ('${title}', '${content}', '${topic}', false, '${new Date().toISOString()}', '${new Date().toISOString()}') RETURNING *`;
+    const result = await client.query(queryString);
     console.log('Post insert result:', result);
     const newPost = result.rows[0];
     res.status(201).json({ message: 'Post created successfully', post: newPost });
   } catch (error) {
-    console.error('Error creating post:', error.message, error.stack);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error creating post:', {
+      message: error.message,
+      stack: error.stack,
+      query: queryString
+    });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 // Get Posts Route
 app.get('/api/posts', async (req, res) => {
