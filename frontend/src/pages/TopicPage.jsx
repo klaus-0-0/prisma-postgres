@@ -1,49 +1,41 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../config';
-import PostForm from '../components/PostForm';
 
 const TopicPage = ({ topic }) => {
   const [posts, setPosts] = useState([]);
 
-  const fetchPosts = async () => {
-    try {
-      const response = await axios.get(`${config.apiUrl}/posts`);
-      const filteredPosts = response.data.filter(post => post.topic && post.topic.toLowerCase() === topic.toLowerCase());
-      setPosts(filteredPosts);
-    } catch (error) {
-      console.error('Error fetching posts', error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get(`${config.apiUrl}/posts?topic=${topic.toLowerCase()}`);
+        setPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching posts', error);
+      }
+    };
+
     fetchPosts();
   }, [topic]);
 
   return (
     <div>
-      <h1>{topic}</h1>
-      <PostForm fetchPosts={fetchPosts} />
-      <div className="post-container">
-        {posts.length > 0 ? (
-          posts.map(post => (
-            <div key={post.id} className="post-box">
-              <h3>{post.title}</h3>
+      <h1>{topic} Posts</h1>
+      {posts.length > 0 ? (
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <h2>{post.title}</h2>
               <p>{post.content}</p>
-              <p><small>{new Date(post.createdAt).toLocaleString()}</small></p>
-            </div>
-          ))
-        ) : (
-          <p>No posts available for this topic.</p>
-        )}
-      </div>
+              <p><strong>Topic:</strong> {post.topic}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No posts available.</p>
+      )}
     </div>
   );
-};
-
-TopicPage.propTypes = {
-  topic: PropTypes.string.isRequired,
 };
 
 export default TopicPage;
