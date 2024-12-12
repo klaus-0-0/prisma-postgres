@@ -197,35 +197,3 @@ button:hover {
   border-radius: 5px; /* Rounded corners */
   background-color: #f9f9f9; /* Background color */
 }
-
-
-/* Styling for topic links in the sidebar */
-.topic-link-container {
-  display: flex;           /* Flexbox layout */
-  flex-direction: column;  /* Stack elements vertically */
-  align-items: center;     /* Center align items horizontally */
-  margin: 0 auto;          /* Center the container itself */
-  padding: 20px;           /* Padding inside the container */
-  background-color: var(--background-color);  /* Use theme background color */
-  border-radius: 5px;      /* Rounded corners */
-  width: 80%;              /* Adjust the width as needed */
-  max-width: 600px;        /* Maximum width for the container */
-}
-
-.topic-link {
-  display: block;          /* Block layout */
-  padding: 10px;           /* Padding inside the link */
-  margin: 10px 0;          /* Margin around the links */
-  color: var(--text-color); /* Use theme text color */
-  font-size: 16px;         /* Font size */
-  text-decoration: none;   /* No text decoration */
-  border-radius: 5px;      /* Rounded corners */
-  background-color: var(--button-background-color); /* Button background color */
-  text-align: center;      /* Center align text */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for background color and text color */
-}
-
-.topic-link:hover {
-  background-color: var(--button-hover-background-color); /* Use theme button hover background color */
-  color: var(--button-text-color); /* Use theme button text color */
-}

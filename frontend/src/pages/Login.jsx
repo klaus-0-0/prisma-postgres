@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import config from '../config';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -22,8 +22,8 @@ const Login = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setMessage('Login successful!');
+        onLogin(); // Update authentication state
         navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
         const errorData = await response.json();
@@ -64,6 +64,10 @@ const Login = () => {
       {message && <p>{message}</p>}
     </div>
   );
+};
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
 };
 
 const styles = {

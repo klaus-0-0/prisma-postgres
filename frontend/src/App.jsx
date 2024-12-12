@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -15,8 +15,16 @@ import LandingPage from './pages/LandingPage';
 
 const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Set dark mode as default
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.remove('light-mode');
+    } else {
+      document.body.classList.add('light-mode');
+    }
+  }, [darkMode]);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -24,11 +32,6 @@ const App = () => {
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
   };
 
   const handleLogin = () => setIsAuthenticated(true);
