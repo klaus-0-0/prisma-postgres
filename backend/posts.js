@@ -7,6 +7,8 @@ const router = express.Router();
 // Create a new post
 router.post('/posts', async (req, res) => {
   const { userId, title, content, topic } = req.body;
+  console.log('Received register request:', req.body); // Log request payload
+
   try {
     const newPost = await prisma.post.create({
       data: {
