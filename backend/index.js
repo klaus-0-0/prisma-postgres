@@ -80,7 +80,7 @@ app.post('/api/posts', async (req, res) => {
         title,
         content,
         topic,
-        authorId: userId,
+        authorId: userId, // Ensure authorId is passed correctly
         published: true
       },
     });
