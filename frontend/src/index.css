@@ -198,3 +198,47 @@ button:hover {
   border-radius: 5px; /* Rounded corners */
   background-color: #f9f9f9; /* Background color */
 }
+
+
+/* Landing Page Styles */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: center;
+  padding: 20px;
+}
+
+.landing-container h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.landing-container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.landing-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.landing-button:hover {
+  background-color: var(--button-hover-background-color);
+}

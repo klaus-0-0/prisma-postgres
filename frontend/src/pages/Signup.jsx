@@ -77,6 +77,7 @@ const Signup = () => {
   );
 };
 
+
 const styles = {
   container: {
     display: 'flex',
@@ -84,30 +85,44 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: '#f0f0f0'
+    backgroundColor: 'var(--background-color)',
+    color: 'var(--text-color)',
+    padding: '20px', // Ensure padding to avoid overlap
+  },
+  heading: {
+    color: 'var(--text-color)',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: '300px'
+    width: '300px',
   },
   inputGroup: {
-    marginBottom: '15px'
+    marginBottom: '15px',
+  },
+  label: {
+    color: 'var(--text-color)',
   },
   input: {
     width: '100%',
     padding: '10px',
     borderRadius: '5px',
-    border: '1px solid #ccc'
+    border: '1px solid #ccc',
+    backgroundColor: 'var(--background-color)',
+    color: 'var(--text-color)',
   },
   button: {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '5px',
-    backgroundColor: '##00BFFF',
-    color: 'white',
-    cursor: 'pointer'
-  }
+    backgroundColor: 'var(--button-background-color)',
+    color: 'var(--button-text-color)',
+    cursor: 'pointer',
+  },
+  message: {
+    color: 'var(--text-color)',
+  },
 };
 
 export default Signup;
+
