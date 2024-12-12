@@ -6,6 +6,7 @@ const PostForm = ({ fetchPosts }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [topic, setTopic] = useState('');
+  const [authorId, setAuthorId] = useState(1); // Replace with actual logic to get authorId
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +16,7 @@ const PostForm = ({ fetchPosts }) => {
         title,
         content,
         topic,
+        authorId
       });
 
       if (response.status === 201) {
@@ -55,6 +57,15 @@ const PostForm = ({ fetchPosts }) => {
           type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Author ID:</label>
+        <input
+          type="number"
+          value={authorId}
+          onChange={(e) => setAuthorId(e.target.value)}
           required
         />
       </div>
