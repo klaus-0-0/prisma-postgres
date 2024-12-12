@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import config from '../config';
 
 const PostForm = () => {
@@ -6,6 +6,17 @@ const PostForm = () => {
   const [content, setContent] = useState('');
   const [topic, setTopic] = useState('');
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Listen for changes in the theme and update CSS variables accordingly
+    const root = document.documentElement;
+
+    root.style.setProperty('--background-color', getComputedStyle(root).getPropertyValue('--background-color'));
+    root.style.setProperty('--text-color', getComputedStyle(root).getPropertyValue('--text-color'));
+    root.style.setProperty('--button-background-color', getComputedStyle(root).getPropertyValue('--button-background-color'));
+    root.style.setProperty('--button-text-color', getComputedStyle(root).getPropertyValue('--button-text-color'));
+    root.style.setProperty('--button-hover-background-color', getComputedStyle(root).getPropertyValue('--button-hover-background-color'));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,10 +53,10 @@ const PostForm = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Create Post</h2>
+      <h2 style={styles.heading}>Create Post</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>
-          <label>Title:</label>
+          <label style={styles.label}>Title:</label>
           <input
             type="text"
             value={title}
@@ -55,7 +66,7 @@ const PostForm = () => {
           />
         </div>
         <div style={styles.inputGroup}>
-          <label>Content:</label>
+          <label style={styles.label}>Content:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -64,7 +75,7 @@ const PostForm = () => {
           />
         </div>
         <div style={styles.inputGroup}>
-          <label>Topic:</label>
+          <label style={styles.label}>Topic:</label>
           <input
             type="text"
             value={topic}
@@ -75,7 +86,7 @@ const PostForm = () => {
         </div>
         <button type="submit" style={styles.button}>Post</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p style={styles.message}>{message}</p>}
     </div>
   );
 };
@@ -87,7 +98,10 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: '#f0f0f0'
+    backgroundColor: 'var(--background-color)'
+  },
+  heading: {
+    color: 'var(--text-color)'
   },
   form: {
     display: 'flex',
@@ -97,19 +111,27 @@ const styles = {
   inputGroup: {
     marginBottom: '15px'
   },
+  label: {
+    color: 'var(--text-color)'
+  },
   input: {
     width: '100%',
     padding: '10px',
     borderRadius: '5px',
-    border: '1px solid #ccc'
+    border: '1px solid #ccc',
+    backgroundColor: 'var(--background-color)',
+    color: 'var(--text-color)'
   },
   button: {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '5px',
-    backgroundColor: '#00BFFF',
-    color: 'white',
+    backgroundColor: 'var(--button-background-color)',
+    color: 'var(--button-text-color)',
     cursor: 'pointer'
+  },
+  message: {
+    color: 'var(--text-color)'
   }
 };
 

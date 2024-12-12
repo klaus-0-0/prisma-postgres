@@ -47,7 +47,8 @@ const App = () => {
       </button>
       {showSidebar && (
         <div className="sidebar-container">
-          <a href="/" className="home-button">Home</a>
+          <a href="/" className="home-button">Log out</a>
+          <a href="https://frontend-7ghn.onrender.com/dashboard" className="home-button">Home</a>  {/* Home button */}
           <Sidebar topics={topics} />
         </div>
       )}
