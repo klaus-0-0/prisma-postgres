@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../config';
+import PropTypes from 'prop-types';
 import PostForm from '../components/PostForm';
 
 const TopicPage = ({ topic }) => {
