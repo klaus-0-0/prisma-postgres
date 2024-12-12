@@ -6,14 +6,14 @@ const router = express.Router();
 
 // Create a new post
 router.post('/posts', async (req, res) => {
-  const { userId, title, content, topic } = req.body; // Ensure userId is passed from the frontend
+  const { userId, title, content, topic } = req.body;
   try {
     const newPost = await prisma.post.create({
       data: {
         title,
         content,
         topic,
-        authorId: userId, // Link post to the user
+        authorId: userId,
         published: true
       },
     });
@@ -23,6 +23,7 @@ router.post('/posts', async (req, res) => {
     res.status(500).json({ error: 'Failed to create post' });
   }
 });
+
 
 
 // Retrieve all posts
