@@ -1,112 +1,48 @@
-import config from '../config';
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Signup = () => {
-  const [username, setUsername] = useState('');
+const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(`${config.apiUrl}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, email, password })
+      const response = await axios.post('https://deploy-hmbw.onrender.com/api/login', {
+        email,
+        password
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message);
-        Navigate('/Login')
-      } else {
-        const errorData = await response.json();
-        setMessage(`Registration failed: ${errorData.message}`);
-        console.error('Registration error:', errorData);
+      console.log('Login response:', response.data);
+      if (response.status === 200) {
+        onLogin(); // Update authentication state
+        navigate('/Login'); // Redirect to dashboard on successful login
       }
     } catch (error) {
-      setMessage('Error connecting to server');
-      console.error('Error:', error);
+      console.error('Error during login:', error);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.inputGroup}>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={styles.input}
-          />
-        </div>
-        <button type="submit" style={styles.button}>Sign Up</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    backgroundColor: '#f0f0f0'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '300px'
-  },
-  inputGroup: {
-    marginBottom: '15px'
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ccc'
-  },
-  button: {
-    padding: '10px 15px',
-    border: 'none',
-    borderRadius: '5px',
-    backgroundColor: '#28a745',
-    color: 'white',
-    cursor: 'pointer'
-  }
-};
-
-export default Signup;
+export default LoginForm;

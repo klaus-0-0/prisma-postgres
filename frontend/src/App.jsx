@@ -16,7 +16,7 @@ const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
-
+ 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };

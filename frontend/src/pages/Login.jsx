@@ -1,12 +1,12 @@
-// src/pages/Login.jsx
 import { useState } from 'react';
-import config from '../config'; // Import config file
-import { useNavigate } from 'react-router-dom'
+import config from '../config';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,8 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
-        navigate('/dashboard')
+        onLogin(); // Update authentication state
+        navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
         setMessage('Login failed');
       }
