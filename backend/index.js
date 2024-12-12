@@ -27,47 +27,47 @@ client.connect().catch(err => {
 });
 
 // Register Route
-app.post('/api/register', async (req, res) => {
-  const { username, email, password } = req.body;
+// app.post('/api/register', async (req, res) => {
+//   const { username, email, password } = req.body;
 
-  try {
-    const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
-    if (result.rows.length > 0) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
+//   try {
+//     const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
+//     if (result.rows.length > 0) {
+//       return res.status(400).json({ message: 'User already exists' });
+//     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await client.query(`INSERT INTO "User" (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`);
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     await client.query(`INSERT INTO "User" (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`);
 
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    console.error('Error registering user:', error.message, error.stack);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+//     res.status(201).json({ message: 'User registered successfully' });
+//   } catch (error) {
+//     console.error('Error registering user:', error.message, error.stack);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
 
-// Login Route
-app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
+// // Login Route
+// app.post('/api/login', async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
-    const user = result.rows[0];
-    if (!user) {
-      return res.status(400).json({ message: 'User not found' });
-    }
+//   try {
+//     const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
+//     const user = result.rows[0];
+//     if (!user) {
+//       return res.status(400).json({ message: 'User not found' });
+//     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Invalid password' });
-    }
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) {
+//       return res.status(400).json({ message: 'Invalid password' });
+//     }
 
-    res.status(200).json({ message: 'Login successful' });
-  } catch (error) {
-    console.error('Error during login:', error.message, error.stack);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+//     res.status(200).json({ message: 'Login successful' });
+//   } catch (error) {
+//     console.error('Error during login:', error.message, error.stack);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
