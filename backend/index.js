@@ -18,7 +18,7 @@ app.use(express.json());
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: true
   }
 });
 
@@ -32,16 +32,13 @@ app.post('/api/register', async (req, res) => {
   console.log('Received register request:', req.body);
 
   try {
-    const result = await client.query('SELECT * FROM "User" WHERE email = $1', [email]);
+    const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
     if (result.rows.length > 0) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await client.query(
-      'INSERT INTO "User" (username, email, password) VALUES ($1, $2, $3)',
-      [username, email, hashedPassword]
-    );
+    await client.query(`INSERT INTO "User" (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`);
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -56,7 +53,7 @@ app.post('/api/login', async (req, res) => {
   console.log('Received login request:', req.body);
 
   try {
-    const result = await client.query('SELECT * FROM "User" WHERE email = $1', [email]);
+    const result = await client.query(`SELECT * FROM "User" WHERE email = '${email}'`);
     const user = result.rows[0];
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
@@ -74,6 +71,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Create Post Route
 app.post('/api/posts', async (req, res) => {
   const { title, content, topic } = req.body;
 
@@ -99,13 +97,12 @@ app.post('/api/posts', async (req, res) => {
   }
 });
 
-
 // Get Posts Route
 app.get('/api/posts', async (req, res) => {
   const topic = req.query.topic;
 
   try {
-    const result = await client.query('SELECT * FROM "Post" WHERE topic = $1', [topic]);
+    const result = await client.query(`SELECT * FROM "Post" WHERE topic = '${topic}'`);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching posts:', error.message, error.stack);
