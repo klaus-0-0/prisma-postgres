@@ -1,10 +1,14 @@
-// src/components/Sidebar.jsx
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-// import './Sidebar.css';
+import './Sidebar.css';
 
 const Sidebar = ({ topics }) => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Any logout logic (like clearing authentication tokens) can go here
+    navigate('/'); // Navigate to the landing page
+  };
 
   const handleHomeClick = () => {
     navigate('/dashboard');
@@ -12,7 +16,7 @@ const Sidebar = ({ topics }) => {
 
   return (
     <div className="sidebar">
-      <button className="home-button" onClick={() => navigate('/login')}>Log out</button>
+      <button className="home-button" onClick={handleLogout}>Log out</button>
       <button className="home-dashboard" onClick={handleHomeClick}>Home</button> {/* Home button */}
       <nav>
         <ul>
