@@ -8,21 +8,21 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: 'https://frontend-7ghn.onrender.com', // Allow requests from your deployed frontend domain
+  origin: 'https://frontend-7ghn.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 app.use(express.json());
 
-console.log(`Database URL: ${process.env.DATABASE_URL}`);
-
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
-  ssl: false // Disable SSL
+  ssl: true
 });
 
-client.connect();
+client.connect().catch(err => {
+  console.error('Connection error:', err.stack);
+});
 
 // Register Route
 app.post('/api/register', async (req, res) => {
