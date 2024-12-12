@@ -106,6 +106,7 @@ app.post('/api/login', async (req, res) => {
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
   const { title, content, topic, authorId } = req.body;
+  console.log('Received post request body:', req.body); // Log the request body
 
   if (!title || !content || !topic || !authorId) {
     console.error('Missing required fields:', { title, content, topic, authorId });
@@ -122,6 +123,7 @@ app.post('/api/posts', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 // Retrieve All Posts Route
 app.get('/api/posts', async (req, res) => {

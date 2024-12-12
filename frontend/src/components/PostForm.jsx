@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 
-const PostForm = ({ fetchPosts }) => {
+const PostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [topic, setTopic] = useState('');
@@ -14,11 +14,11 @@ const PostForm = ({ fetchPosts }) => {
       const response = await axios.post(`${config.apiUrl}/posts`, {
         title,
         content,
-        topic
+        topic,
+        authorId: 1 // Ensure this is set correctly
       });
 
       if (response.status === 201) {
-        fetchPosts(); // Refresh posts after successful post creation
         setTitle('');
         setContent('');
         setTopic('');
