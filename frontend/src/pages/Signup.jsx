@@ -104,7 +104,7 @@ const styles = {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '5px',
-    backgroundColor: '#28a745',
+    backgroundColor: '##00BFFF',
     color: 'white',
     cursor: 'pointer'
   }
