@@ -71,16 +71,16 @@ app.post('/api/login', async (req, res) => {
 
 // Create Post Route
 app.post('/api/posts', async (req, res) => {
-  const { title, content, topic } = req.body;
+  const { title, content } = req.body;
 
-  if (!title || !content || !topic) {
-    console.error('Missing required fields:', { title, content, topic });
-    return res.status(400).json({ message: 'All fields are required' });
+  if (!title || !content) {
+    console.error('Missing required fields:', { title, content });
+    return res.status(400).json({ message: 'Both title and content are required' });
   }
 
   try {
-    console.log('Inserting post:', { title, content, topic });
-    const queryString = `INSERT INTO "Post" (title, content, topic, published, createdAt, updatedAt) VALUES ('${title}', '${content}', '${topic}', false, '${new Date().toISOString()}', '${new Date().toISOString()}') RETURNING *`;
+    console.log('Inserting post:', { title, content });
+    const queryString = `INSERT INTO "Post" (title, content) VALUES ('${title}', '${content}') RETURNING *`;
     const result = await client.query(queryString);
     const newPost = result.rows[0];
     res.status(201).json({ message: 'Post created successfully', post: newPost });
@@ -89,6 +89,7 @@ app.post('/api/posts', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 // Retrieve All Posts Route
 app.get('/api/posts', async (req, res) => {
