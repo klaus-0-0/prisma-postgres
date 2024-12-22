@@ -1,37 +1,37 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import config from '../config';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import config from '../config';
+import AuthContext from '../context/AuthContext'; // Import the context
+import PropTypes from 'prop-types'
 
-const Login = ({ onLogin }) => {
+const Login = ({onLogin}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Use the context
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${config.apiUrl}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+      const response = await axios.post(`${config.apiUrl}/auth/login`, { email, password });
 
-      if (response.ok) {
-        setMessage('Login successful!');
-        onLogin(); // Update authentication state
-        navigate('/dashboard'); // Redirect to dashboard on successful login
+      if (response.status === 200) {
+        setMessage('Login successful');
+        const userResponse = await axios.get(`${config.apiUrl}/auth/user`, { params: { email } });
+        const userId = userResponse.data.id;
+        console.log("loginnn = ", userId);
+        login({ userId }); // Call the context login function
+        onLogin()
+        navigate('/dashboard'); // Navigate to dashboard
       } else {
-        const errorData = await response.json();
-        setMessage(`Login failed: ${errorData.message}`);
+        setMessage(`Login error: ${response.data.message}`);
       }
     } catch (error) {
-      setMessage('Error connecting to server');
-      console.error('Error:', error);
+      setMessage(`Login error: ${error.response?.data?.message || error.message}`);
+      console.error('Login error:', error);
     }
   };
 
@@ -66,10 +66,6 @@ const Login = ({ onLogin }) => {
   );
 };
 
-Login.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-};
-
 const styles = {
   container: {
     display: 'flex',
@@ -79,10 +75,7 @@ const styles = {
     height: '100vh',
     backgroundColor: 'var(--background-color)',
     color: 'var(--text-color)',
-    padding: '20px', // Ensure padding to avoid overlap
-  },
-  heading: {
-    color: 'var(--text-color)',
+    padding: '20px',
   },
   form: {
     display: 'flex',
@@ -91,9 +84,6 @@ const styles = {
   },
   inputGroup: {
     marginBottom: '15px',
-  },
-  label: {
-    color: 'var(--text-color)',
   },
   input: {
     width: '100%',
@@ -111,10 +101,10 @@ const styles = {
     color: 'var(--button-text-color)',
     cursor: 'pointer',
   },
-  message: {
-    color: 'var(--text-color)',
-  },
+};
 
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
 };
 
 export default Login;

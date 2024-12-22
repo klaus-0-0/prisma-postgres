@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../config';
+// import PostForm from '../components/PostForm';
 
-const Dashboard = () => {
+const Dashboard = ({ userId }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
+  console.log("dashbowrdd = ", userId)
 
   const fetchPosts = async () => {
     try {
@@ -23,6 +26,8 @@ const Dashboard = () => {
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Dashboard</h1>
+      <p>User ID: {userId}</p>
+      {/* <PostForm userId={userId} onPostCreated={fetchPosts} /> */}
       {error && <p style={styles.error}>{error}</p>}
       <div style={styles.postContainer}>
         {posts.length > 0 ? (
@@ -39,6 +44,10 @@ const Dashboard = () => {
       </div>
     </div>
   );
+};
+
+Dashboard.propTypes = {
+  userId: PropTypes.number.isRequired,
 };
 
 const styles = {

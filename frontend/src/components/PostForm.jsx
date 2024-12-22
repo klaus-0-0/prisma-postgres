@@ -1,62 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import config from '../config';
+import AuthContext from '../context/AuthContext'; // Import the context
 
-const PostForm = () => {
+const PostForm = ({ onPostCreated }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [topic, setTopic] = useState('');
   const [message, setMessage] = useState('');
+  const { user } = useContext(AuthContext); // Use the context to get the user
 
-  useEffect(() => {
-    // Listen for changes in the theme and update CSS variables accordingly
-    const root = document.documentElement;
-
-    root.style.setProperty('--background-color', getComputedStyle(root).getPropertyValue('--background-color'));
-    root.style.setProperty('--text-color', getComputedStyle(root).getPropertyValue('--text-color'));
-    root.style.setProperty('--button-background-color', getComputedStyle(root).getPropertyValue('--button-background-color'));
-    root.style.setProperty('--button-text-color', getComputedStyle(root).getPropertyValue('--button-text-color'));
-    root.style.setProperty('--button-hover-background-color', getComputedStyle(root).getPropertyValue('--button-hover-background-color'));
-  }, []);
+  console.log("auth = ", user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      setMessage('User not logged in');
+      return;
+    }
+
     try {
-      const response = await fetch(`${config.apiUrl}/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title,
-          content,
-          topic,
-          authorId: 1 // Ensure this is set correctly
-        })
+      const response = await axios.post(`${config.apiUrl}/posts`, {
+        title,
+        content,
+        authorId: user.userId, // Use userId from the context
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         setMessage('Post created successfully');
         setTitle('');
         setContent('');
-        setTopic('');
+        onPostCreated();
       } else {
-        const errorData = await response.json();
-        setMessage(`Error posting message: ${errorData.message}`);
-        console.error('Error posting message:', errorData);
+        setMessage(`Error creating post: ${response.data.error}`);
       }
     } catch (error) {
-      setMessage('Error connecting to server');
-      console.error('Error:', error);
+      setMessage(`Error creating post: ${error.response?.data?.message || error.message}`);
+      console.error('Error creating post:', error);
     }
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Create Post</h2>
+      <h2>Create Post</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Title:</label>
+          <label>Title:</label>
           <input
             type="text"
             value={title}
@@ -66,7 +56,7 @@ const PostForm = () => {
           />
         </div>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Content:</label>
+          <label>Content:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -74,21 +64,15 @@ const PostForm = () => {
             style={styles.input}
           />
         </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Topic:</label>
-          <input
-            type="text"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            required
-            style={styles.input}
-          />
-        </div>
         <button type="submit" style={styles.button}>Post</button>
       </form>
-      {message && <p style={styles.message}>{message}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
+};
+
+PostForm.propTypes = {
+  onPostCreated: PropTypes.func.isRequired,
 };
 
 const styles = {
@@ -97,22 +81,16 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100vh',
-    backgroundColor: 'var(--background-color)'
-  },
-  heading: {
-    color: 'var(--text-color)'
+    backgroundColor: 'var(--background-color)',
+    padding: '20px',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: '300px'
+    width: '300px',
   },
   inputGroup: {
-    marginBottom: '15px'
-  },
-  label: {
-    color: 'var(--text-color)'
+    marginBottom: '15px',
   },
   input: {
     width: '100%',
@@ -120,7 +98,7 @@ const styles = {
     borderRadius: '5px',
     border: '1px solid #ccc',
     backgroundColor: 'var(--background-color)',
-    color: 'var(--text-color)'
+    color: 'var(--text-color)',
   },
   button: {
     padding: '10px 15px',
@@ -128,11 +106,11 @@ const styles = {
     borderRadius: '5px',
     backgroundColor: 'var(--button-background-color)',
     color: 'var(--button-text-color)',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   message: {
-    color: 'var(--text-color)'
-  }
+    color: 'var(--text-color)',
+  },
 };
 
 export default PostForm;

@@ -1,19 +1,19 @@
 import config from '../config';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${config.apiUrl}/register`, {
+      const response = await fetch(`${config.apiUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -77,7 +77,6 @@ const Signup = () => {
   );
 };
 
-
 const styles = {
   container: {
     display: 'flex',
@@ -87,10 +86,7 @@ const styles = {
     height: '100vh',
     backgroundColor: 'var(--background-color)',
     color: 'var(--text-color)',
-    padding: '20px', // Ensure padding to avoid overlap
-  },
-  heading: {
-    color: 'var(--text-color)',
+    padding: '20px',
   },
   form: {
     display: 'flex',
@@ -99,9 +95,6 @@ const styles = {
   },
   inputGroup: {
     marginBottom: '15px',
-  },
-  label: {
-    color: 'var(--text-color)',
   },
   input: {
     width: '100%',
@@ -125,4 +118,3 @@ const styles = {
 };
 
 export default Signup;
-
