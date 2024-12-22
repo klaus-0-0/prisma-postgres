@@ -1,5 +1,4 @@
-// src/components/Comment.jsx
-// import React from 'react';
+//  pending
 import PropTypes from 'prop-types';
 
 const Comment = ({ comment }) => {

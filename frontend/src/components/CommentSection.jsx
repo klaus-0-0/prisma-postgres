@@ -1,4 +1,4 @@
-// src/components/CommentSection.jsx
+// pending...
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Comment from './Comment';

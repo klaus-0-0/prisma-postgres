@@ -27,7 +27,7 @@ router.post('/posts', async (req, res) => {
     res.json(newPost);
   } catch (error) {
     console.error('Error creating post:', error.message, error.stack);
-    res.status(500).json({ error: 'Failed to create post' });
+    res.status(500).json({ error: 'Failed to create post- !! -prisma generation problem' });
   }
 });
 
